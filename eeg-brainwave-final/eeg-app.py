@@ -39,18 +39,19 @@ import requests
 @app.route('/result.html', methods = ['GET', 'POST'])
 def upload_file2():
    if request.method == 'POST':
-      f = request.files['file']
       name=request.form.get('first_name')
       mail=request.form.get('mail_id')
+      f = request.files['file']
       df=pd.read_csv(f)
       emotion=predict(df)
-      response = requests.post('https://events-api.notivize.com/applications/d5f045ef-7789-400f-a2f6-20a086899fb4/event_flows/c8fe106a-69db-4195-afe3-7c8f4dcedb9b/events', json = {
-      'email': mail,
-      'first_name': name,
-      'result': 0,
-      'unique_id': 123456
-      })
-      print(response)
+      if(emotion=='NEGATIVE'):
+        response = requests.post('https://events-api.notivize.com/applications/d5f045ef-7789-400f-a2f6-20a086899fb4/event_flows/c8fe106a-69db-4195-afe3-7c8f4dcedb9b/events', json = {
+        'email': mail,
+        'first_name': name,
+        'result': '0',
+        'unique_id': '123456',
+        })
+        print(response)
       
       return render_template('result.html',emotion=emotion)
         
