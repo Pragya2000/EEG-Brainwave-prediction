@@ -11,11 +11,11 @@ model =tf.keras.models.load_model(MODEL_PATH)
 
 @app.route('/index.html')
 def home_page():
-	return render_template('index.html')
+  return render_template('index.html')
 
 @app.route('/about.html')
 def about_page():
-	return render_template('about.html')
+  return render_template('about.html')
 
 @app.route('/uploadx.html')
 def upload_file1():
@@ -44,14 +44,14 @@ def upload_file2():
       f = request.files['file']
       df=pd.read_csv(f)
       emotion=predict(df)
-      if(emotion=='NEGATIVE'):
-        response = requests.post('https://events-api.notivize.com/applications/d5f045ef-7789-400f-a2f6-20a086899fb4/event_flows/c8fe106a-69db-4195-afe3-7c8f4dcedb9b/events', json = {
-        'email': mail,
-        'first_name': name,
-        'result': '0',
-        'unique_id': '123456',
-        })
-        print(response)
+      #if(emotion=='NEGATIVE'):
+      response = requests.post('https://events-api.notivize.com/applications/d5f045ef-7789-400f-a2f6-20a086899fb4/event_flows/c8fe106a-69db-4195-afe3-7c8f4dcedb9b/events', json = {
+      'email': mail,
+      'first_name': name,
+      'result': '0',
+      'unique_id': '12456',
+      })
+      print(response)
       
       return render_template('result.html',emotion=emotion)
         
