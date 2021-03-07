@@ -9,4 +9,4 @@ cd to eeg-brainwave directory
 
 run the "python eeg-app.py" command
 
-visit http://127.0.0.1:5000/upload
+visit http://127.0.0.1:5000/index.html
