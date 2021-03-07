@@ -34,6 +34,7 @@ def predict(df):
       return 'POSITIVE'
 
 import requests
+from random import randint
 
 
 @app.route('/result.html', methods = ['GET', 'POST'])
@@ -45,11 +46,12 @@ def upload_file2():
       df=pd.read_csv(f)
       emotion=predict(df)
       #if(emotion=='NEGATIVE'):
+      num=randint(100001,999999)
       response = requests.post('https://events-api.notivize.com/applications/d5f045ef-7789-400f-a2f6-20a086899fb4/event_flows/c8fe106a-69db-4195-afe3-7c8f4dcedb9b/events', json = {
       'email': mail,
       'first_name': name,
       'result': '0',
-      'unique_id': '12456',
+      'unique_id': str(num),
       })
       print(response)
       
