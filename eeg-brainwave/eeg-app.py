@@ -8,11 +8,20 @@ app = Flask(__name__)
 
 MODEL_PATH='eeg-brainwave-pred.h5'
 model =tf.keras.models.load_model(MODEL_PATH)
-@app.route('/upload')
-def upload_file1():
-   return render_template('upload.html')
 
-#@app.route('/predict',methods=['POST'])
+@app.route('/index.html')
+def home_page():
+	return render_template('index.html')
+
+@app.route('/about.html')
+def about_page():
+	return render_template('about.html')
+
+@app.route('/uploadx.html')
+def upload_file1():
+   return render_template('uploadx.html')
+
+
 def predict(df):
     X= df.drop('2548', axis=1)
     A=model.predict(X)
@@ -24,12 +33,13 @@ def predict(df):
     elif(num==2):
       return 'POSITIVE'
 
-@app.route('/uploader', methods = ['GET', 'POST'])
+@app.route('/result.html', methods = ['GET', 'POST'])
 def upload_file2():
    if request.method == 'POST':
       f = request.files['file']
       df=pd.read_csv(f)
-      return predict(df)
+      emotion=predict(df)
+      return render_template('result.html',emotion=emotion)
         
 if __name__ == '__main__':
    app.run(debug = True)
